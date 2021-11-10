@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "")
+    set(CMAKE_INSTALL_CONFIG_NAME "Debug")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -38,17 +38,9 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/qudoudou/RC2021/build/rcnn_ros/catkin_generated/installspace/rcnn_ros.pc")
-endif()
-
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rcnn_ros/cmake" TYPE FILE FILES
-    "/home/qudoudou/RC2021/build/rcnn_ros/catkin_generated/installspace/rcnn_rosConfig.cmake"
-    "/home/qudoudou/RC2021/build/rcnn_ros/catkin_generated/installspace/rcnn_rosConfig-version.cmake"
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rcnn_ros/msg" TYPE FILE FILES
+    "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg"
+    "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg"
     )
-endif()
-
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rcnn_ros" TYPE FILE FILES "/home/qudoudou/RC2021/src/rcnn_ros/package.xml")
 endif()
 
