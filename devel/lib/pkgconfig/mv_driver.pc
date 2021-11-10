@@ -1,0 +1,8 @@
+prefix=/home/qudoudou/RC2021/devel
+
+Name: mv_driver
+Description: Description of mv_driver
+Version: 0.0.0
+Cflags: -I/home/qudoudou/RC2021/devel/include
+Libs: -L${prefix}/lib 
+Requires: 

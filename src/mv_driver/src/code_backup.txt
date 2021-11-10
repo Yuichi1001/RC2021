@@ -1,0 +1,347 @@
+//	int channels = depth.channels();
+
+// 	cv::Mat reverse(depth.rows, depth.cols, CV_8UC1);
+// 	uchar* Data_;
+// 	for (int i = 0; i < depth.rows; i++)
+// 	{
+// 		Data_ = reverse.ptr<uchar>(i);
+// 		for (int j = 0; j < depth.cols; j++)
+// 		{
+// 			Data_[j] = 0;
+// 		}
+// 	}
+
+// 	// 点云变量
+// 	// 使用智能指针，创建一个空点云。这种指针用完会自动释放。
+// 	PointCloud::Ptr cloud(new PointCloud);
+// 	// 遍历深度图
+// 	int qaq = 0;
+// 	for (int m = 0; m < depth.rows; m++)
+// 	{
+// 		for (int n = 0; n < depth.cols; n++)
+// 		{
+// 			// 获取深度图中(m,n)处的值
+// 			uchar d = depth.ptr<uchar>(m)[n];
+// 			// d 可能没有值，若如此，跳过此点
+// 			if (d == 0)
+// 				continue;
+// 			// d 存在值，则向点云增加一个点
+// 			PointT p;
+// 			// 计算这个点的空间坐标/ camera_factor
+// 			p.z = (300-double(d))*4;
+// 			p.x = (n - camera_cx) * p.z / camera_fx;
+// 			p.y = (m - camera_cy) * p.z / camera_fy;
+// 			// 从rgb图像中获取它的颜色
+// 			// rgb是三通道的BGR格式图，所以按下面的顺序获取颜色
+
+// 			// 把p加入到点云中
+// 			cloud->points.push_back(p);
+// 		}
+// 	}
+
+// 	// 设置并保存点云
+// 	cloud->height = 1;
+// 	cloud->width = cloud->points.size();
+// 	cout << "point cloud size = " << cloud->points.size() << endl;
+// 	cloud->is_dense = false;
+// 	//pcl::io::savePCDFile("15.pcd", *cloud);
+// 	//system("pause");
+
+// 	//转化回2D
+// 	/*
+// 	int k = cloud->points.size();
+// 	uchar d_ = 0;
+// 	float m_ = 0.0, n_ = 0.0;
+// 	int mm = 0, nn = 0;
+// 	for (int i = 0; i < k; i++)
+// 	{
+// 		d_ = uchar(cloud->points[i].z);
+// 		if (cloud->points[i].z != 0)
+// 		{
+// 			m_ = cloud->points[i].y*camera_fy / cloud->points[i].z + camera_cy;
+// 			n_ = cloud->points[i].x*camera_fx / cloud->points[i].z + camera_cx;
+// 			mm = int(m_);
+// 			nn = int(n_);
+// 			if (d_ < 0)
+// 				d_ = 0;
+// 			if (d_ > 255)
+// 				d_ = 255;
+// 			//if (mm >= 0 && mm < 480 && nn >= 0 && nn < 640 )
+// 			{
+// 				reverse.at<uchar>(mm, nn) = d_;
+// 				printf("d_:%d\n", d_);
+// 			}
+// 		}
+// 	}
+// 	imshow("reverse", reverse);
+// 	cvWaitKey(10);
+// 	system("pause");
+// 	*/
+// 	// 清除数据并退出
+// 	//cloud->points.clear();
+// 	cout << "Point cloud saved." << endl;
+
+// 	/*
+// 	pcl::PCDReader reader;
+// 	PointCloud_next::Ptr cloud_next(new PointCloud_next);
+// 	reader.read("15.pcd", *cloud_next);
+// 	pcl::ModelCoefficients::Ptr coefficients(new pcl::ModelCoefficients);
+// 	pcl::PointIndices::Ptr inliers(new pcl::PointIndices);
+// 	// Create the segmentation object
+// 	pcl::SACSegmentation<pcl::PointXYZ> seg;
+// 	// Optional
+// 	seg.setOptimizeCoefficients(true);
+// 	// Mandatory
+// 	seg.setModelType(pcl::SACMODEL_PLANE);
+// 	seg.setMethodType(pcl::SAC_RANSAC);
+// 	seg.setDistanceThreshold(3);
+// 	seg.setInputCloud(cloud_next);
+// 	seg.segment(*inliers, *coefficients);
+// 	//取出平面里的点
+// 	//pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_filtered(new pcl::PointCloud<pcl::PointXYZ>);
+// 	pcl::ExtractIndices<pcl::PointXYZ> extract;
+// 	extract.setInputCloud(cloud_next);
+// 	extract.setIndices(inliers);
+// 	//extract.filter(*cloud_filtered);
+
+// 	// 提取除地面外的物体
+// 	//extract.setNegative(true);
+// 	extract.filter(*cloud_filtered);
+// 	seg.setInputCloud(cloud_filtered);
+// 	seg.segment(*inliers, *coefficients);
+// */
+	
+// 	//显示点云
+
+// 	int v1(0);
+// 	boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(new pcl::visualization::PCLVisualizer("3D Viewer"));
+// 	viewer->createViewPort(0.0, 0.0, 1.0, 1.0, v1);
+// 	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZRGBA> single_color(cloud, 0, 255, 0); // green
+// 	viewer->addPointCloud<pcl::PointXYZRGBA>(cloud, single_color, "sample cloud", v1);
+// 	viewer->addCoordinateSystem(1.0);
+// 	viewer->spin();
+// 	//system("pause");
+
+// 	// 清除数据并退出
+// 	cloud->points.clear();
+// 	cout << "Point cloud_next dealed." << endl;
+//}
+
+#include <pcl/io/pcd_io.h>
+#include <pcl/point_types.h>
+#include <pcl/visualization/cloud_viewer.h>
+#include <pcl/sample_consensus/method_types.h>
+#include <pcl/sample_consensus/model_types.h>
+#include <pcl/segmentation/sac_segmentation.h>
+#include <pcl/filters/extract_indices.h>
+#include <pcl/visualization/impl/point_cloud_geometry_handlers.hpp>
+
+void deep_to_point()
+{
+	int k = 0;
+
+	rs2::pipeline pipe;     //Contruct a pipeline which abstracts the device
+
+	rs2::config cfg;    //Create a configuration for configuring the pipeline with a non default profile
+
+	cfg.enable_stream(RS2_STREAM_COLOR, 640, 480, RS2_FORMAT_BGR8, 30);
+
+	cfg.enable_stream(RS2_STREAM_DEPTH, 640, 480, RS2_FORMAT_Z16, 30);
+
+	rs2::pipeline_profile selection = pipe.start(cfg);
+
+	bool stop = false;
+
+	Mat depth;
+	while (!stop)
+	 {
+
+		rs2::frameset frames;
+
+
+		frames = pipe.wait_for_frames();
+
+		//Get each frame
+
+		auto color_frame = frames.get_color_frame();
+
+		auto depth_frame = frames.get_depth_frame();
+
+		//create cv::Mat from rs2::frame
+
+		Mat color(Size(640, 480), CV_8UC3, (void*)color_frame.get_data(), Mat::AUTO_STEP);
+		Mat deep(Size(640, 480), CV_16UC1, (void*)depth_frame.get_data(), Mat::AUTO_STEP);
+		
+		k++;
+		if (k > 10)
+		{
+			Mat dst3(Size(640, 480), CV_16UC1);
+			ushort* p;
+			ushort* q;
+
+			//float scale = frames.get_depth_scale();
+			for (int y = 0; y < 480; y++)
+			{
+				q = deep.ptr<ushort>(y);
+				for (int x = 0; x < 640; x++)
+				{
+					//dst->imageData[y * depth_info.height + x] = depth__data[y * depth_info.height + x];
+					ushort d = 0.125 * q[x];
+					//cout << "d:  " << d << endl;
+					p = dst3.ptr<ushort>(y);
+
+					//距离在0.2m至1.2m之间
+
+					if (d > 0)
+					{
+						p[x] = 255 - 0.255 * (d - 200);
+						//cout << "p:  " << p[x] << endl;
+					}
+					else
+
+						p[x] = 0;
+				}
+			}
+			
+			dst3.convertTo(depth, CV_8UC1, 1);
+			string color_image = "image1.jpg";
+			string Img_Name = "deep.jpg";
+			destroyAllWindows();
+			break;
+		}
+		imshow("Display Image", color);
+		imshow("Display deep", deep * 5);
+
+		waitKey(3000);
+
+
+		if (waitKey(10) >= 0)
+
+			stop = true;
+
+	}
+	int channels = depth.channels();
+
+	cv::Mat reverse(depth.rows, depth.cols, CV_8UC1);
+	uchar* Data_;
+	for (int i = 0; i < depth.rows; i++)
+	{
+		Data_ = reverse.ptr<uchar>(i);
+		for (int j = 0; j < depth.cols; j++)
+		{
+			Data_[j] = 0;
+		}
+	}
+
+	// 点云变量
+	// 使用智能指针，创建一个空点云。这种指针用完会自动释放。
+	PointCloud::Ptr cloud(new PointCloud);
+	// 遍历深度图
+	int qaq = 0;
+	for (int m = 0; m < depth.rows; m++)
+	{
+		for (int n = 0; n < depth.cols; n++)
+		{
+			// 获取深度图中(m,n)处的值
+			uchar d = depth.ptr<uchar>(m)[n];
+			// d 可能没有值，若如此，跳过此点
+			if (d == 0)
+				continue;
+			// d 存在值，则向点云增加一个点
+			PointT p;
+			// 计算这个点的空间坐标/ camera_factor
+			p.z = (300-double(d))*4;
+			p.x = (n - camera_cx) * p.z / camera_fx;
+			p.y = (m - camera_cy) * p.z / camera_fy;
+			// 从rgb图像中获取它的颜色
+			// rgb是三通道的BGR格式图，所以按下面的顺序获取颜色
+
+			// 把p加入到点云中
+			cloud->points.push_back(p);
+		}
+	}
+
+	// 设置并保存点云
+	
+	//pcl::io::savePCDFile("15.pcd", *cloud);
+	//system("pause");
+
+	//转化回2D
+	/*
+	int k = cloud->points.size();
+	uchar d_ = 0;
+	float m_ = 0.0, n_ = 0.0;
+	int mm = 0, nn = 0;
+	for (int i = 0; i < k; i++)
+	{
+		d_ = uchar(cloud->points[i].z);
+		if (cloud->points[i].z != 0)
+		{
+			m_ = cloud->points[i].y*camera_fy / cloud->points[i].z + camera_cy;
+			n_ = cloud->points[i].x*camera_fx / cloud->points[i].z + camera_cx;
+			mm = int(m_);
+			nn = int(n_);
+			if (d_ < 0)
+				d_ = 0;
+			if (d_ > 255)
+				d_ = 255;
+			//if (mm >= 0 && mm < 480 && nn >= 0 && nn < 640 )
+			{
+				reverse.at<uchar>(mm, nn) = d_;
+				printf("d_:%d\n", d_);
+			}
+		}
+	}
+	imshow("reverse", reverse);
+	cvWaitKey(10);
+	system("pause");
+	*/
+	// 清除数据并退出
+	//cloud->points.clear();
+	cout << "Point cloud saved." << endl;
+
+	/*
+	pcl::PCDReader reader;
+	PointCloud_next::Ptr cloud_next(new PointCloud_next);
+	reader.read("15.pcd", *cloud_next);
+	pcl::ModelCoefficients::Ptr coefficients(new pcl::ModelCoefficients);
+	pcl::PointIndices::Ptr inliers(new pcl::PointIndices);
+	// Create the segmentation object
+	pcl::SACSegmentation<pcl::PointXYZ> seg;
+	// Optional
+	seg.setOptimizeCoefficients(true);
+	// Mandatory
+	seg.setModelType(pcl::SACMODEL_PLANE);
+	seg.setMethodType(pcl::SAC_RANSAC);
+	seg.setDistanceThreshold(3);
+	seg.setInputCloud(cloud_next);
+	seg.segment(*inliers, *coefficients);
+	//取出平面里的点
+	//pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_filtered(new pcl::PointCloud<pcl::PointXYZ>);
+	pcl::ExtractIndices<pcl::PointXYZ> extract;
+	extract.setInputCloud(cloud_next);
+	extract.setIndices(inliers);
+	//extract.filter(*cloud_filtered);
+
+	// 提取除地面外的物体
+	//extract.setNegative(true);
+	extract.filter(*cloud_filtered);
+	seg.setInputCloud(cloud_filtered);
+	seg.segment(*inliers, *coefficients);
+*/
+	
+	//显示点云
+
+	int v1(0);
+	boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(new pcl::visualization::PCLVisualizer("3D Viewer"));
+	viewer->createViewPort(0.0, 0.0, 1.0, 1.0, v1);
+	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> single_color(cloud, 0, 255, 0); // green
+	viewer->addPointCloud<pcl::PointXYZ>(cloud, single_color, "sample cloud", v1);
+	viewer->addCoordinateSystem(1.0);
+	viewer->spin();
+	//system("pause");
+
+	// 清除数据并退出
+	cloud->points.clear();
+	cout << "Point cloud_next dealed." << endl;
+}

@@ -1,0 +1,8 @@
+prefix=/home/qudoudou/RC2021/install
+
+Name: video_pub
+Description: Description of video_pub
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

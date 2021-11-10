@@ -1,0 +1,8 @@
+prefix=/home/qudoudou/RC2021/devel
+
+Name: rcnn_ros
+Description: Description of rcnn_ros
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
