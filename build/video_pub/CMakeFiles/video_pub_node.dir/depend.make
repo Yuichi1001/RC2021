@@ -3,7 +3,7 @@
 
 video_pub/CMakeFiles/video_pub_node.dir/src/video_pub.cpp.o: /home/qudoudou/RC2021/devel/include/mv_driver/raw_img.h
 video_pub/CMakeFiles/video_pub_node.dir/src/video_pub.cpp.o: /home/qudoudou/RC2021/src/video_pub/src/video_pub.cpp
-video_pub/CMakeFiles/video_pub_node.dir/src/video_pub.cpp.o: /home/qudoudou/cv_bridge/install/include/cv_bridge/cv_bridge.h
+video_pub/CMakeFiles/video_pub_node.dir/src/video_pub.cpp.o: /opt/ros/melodic/include/cv_bridge/cv_bridge.h
 video_pub/CMakeFiles/video_pub_node.dir/src/video_pub.cpp.o: /opt/ros/melodic/include/image_transport/camera_publisher.h
 video_pub/CMakeFiles/video_pub_node.dir/src/video_pub.cpp.o: /opt/ros/melodic/include/image_transport/camera_subscriber.h
 video_pub/CMakeFiles/video_pub_node.dir/src/video_pub.cpp.o: /opt/ros/melodic/include/image_transport/exception.h

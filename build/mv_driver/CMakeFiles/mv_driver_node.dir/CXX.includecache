@@ -6,6 +6,26 @@
 
 #IncludeRegexTransform: 
 
+/home/qudoudou/RC2021/devel/include/mv_driver/raw_img.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+sensor_msgs/Image.h
+-
+sensor_msgs/Image.h
+-
+
 /home/qudoudou/RC2021/src/mv_driver/src/mv_driver.cpp
 ros/ros.h
 /home/qudoudou/RC2021/src/mv_driver/src/ros/ros.h
@@ -34,7 +54,7 @@ librealsense2/hpp/rs_sensor.hpp
 opencv2/opencv.hpp
 -
 
-/home/qudoudou/cv_bridge/install/include/cv_bridge/cv_bridge.h
+/opt/ros/melodic/include/cv_bridge/cv_bridge.h
 sensor_msgs/Image.h
 -
 sensor_msgs/CompressedImage.h

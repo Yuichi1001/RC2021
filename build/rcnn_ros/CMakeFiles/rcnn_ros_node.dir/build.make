@@ -90,10 +90,10 @@ rcnn_ros_node_EXTERNAL_OBJECTS =
 
 /home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: rcnn_ros/CMakeFiles/rcnn_ros_node.dir/src/rcnn.cpp.o
 /home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: rcnn_ros/CMakeFiles/rcnn_ros_node.dir/build.make
-/home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: /home/qudoudou/cv_bridge/install/lib/libcv_bridge.so
-/home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: /usr/lib/x86_64-linux-gnu/libopencv_core.so.3.2.0
-/home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.3.2.0
-/home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: /usr/lib/x86_64-linux-gnu/libopencv_imgcodecs.so.3.2.0
+/home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: /opt/ros/melodic/lib/libcv_bridge.so
+/home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: /usr/local/lib/libopencv_core.so.4.5.0
+/home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: /usr/local/lib/libopencv_imgproc.so.4.5.0
+/home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: /usr/local/lib/libopencv_imgcodecs.so.4.5.0
 /home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: /opt/ros/melodic/lib/libimage_transport.so
 /home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: /opt/ros/melodic/lib/libmessage_filters.so
 /home/qudoudou/RC2021/devel/lib/rcnn_ros/rcnn_ros_node: /opt/ros/melodic/lib/libclass_loader.so

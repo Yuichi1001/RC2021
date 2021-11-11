@@ -46,7 +46,7 @@ std_msgs/Bool.h
 mv_driver/raw_img.h
 /home/qudoudou/RC2021/src/video_pub/src/mv_driver/raw_img.h
 
-/home/qudoudou/cv_bridge/install/include/cv_bridge/cv_bridge.h
+/opt/ros/melodic/include/cv_bridge/cv_bridge.h
 sensor_msgs/Image.h
 -
 sensor_msgs/CompressedImage.h

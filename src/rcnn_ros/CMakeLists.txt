@@ -28,16 +28,28 @@ find_package(
   catkin REQUIRED COMPONENTS
   roscpp
   rospy
-  std_msgs
   cv_bridge
   image_transport 
-  mv_driver 
+  mv_driver
+  message_generation
+  std_msgs
 )
 
 add_message_files(
   FILES
   detection.msg
   results.msg
+)
+
+generate_messages(
+ DEPENDENCIES
+)
+
+catkin_package(
+ CATKIN_DEPENDS
+ roscpp
+ mv_driver
+ message_runtime
 )
 
 include_directories(

@@ -17,10 +17,9 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "/home/qudoudou/RC2021/devel/include"
   "/usr/local/cuda-10.2/include"
   "/home/qudoudou/TensorRT-7.2.1.6/include"
-  "/home/qudoudou/RC2021/devel/include"
-  "/home/qudoudou/cv_bridge/install/include"
   "/opt/ros/melodic/include"
   "/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   "/usr/include/opencv"

@@ -3,6 +3,6 @@ prefix=/home/qudoudou/RC2021/devel
 Name: rcnn_ros
 Description: Description of rcnn_ros
 Version: 0.0.0
-Cflags: 
+Cflags: -I/home/qudoudou/RC2021/devel/include
 Libs: -L${prefix}/lib 
-Requires: 
+Requires: roscpp mv_driver message_runtime

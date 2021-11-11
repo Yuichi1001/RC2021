@@ -1,2 +1,2 @@
 time stamp
-neural_net/detection[] results
+rcnn_ros/detection[] results
