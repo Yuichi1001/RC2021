@@ -44,7 +44,7 @@ static constexpr int POOLER_RESOLUTION = 14;
 // roihead
 static constexpr float NMS_THRESH_TEST = 0.5;
 static constexpr int DETECTIONS_PER_IMAGE = 100;
-static constexpr float SCORE_THRESH = 0.6;
+static constexpr float SCORE_THRESH = 0.8;
 static const std::vector<float> BBOX_REG_WEIGHTS = { 10.0, 10.0, 5.0, 5.0 };
 static bool MASK_ON = true;
 
@@ -97,12 +97,28 @@ std::vector<float>& input, std::vector<float*>& output) {
 
 
 
+
+
+
+
+void imageCallback(const mv_driver::raw_imgPtr& msg);
+IExecutionContext* context;
+ICudaEngine* engine;
+IRuntime* runtime;
+cudaStream_t stream;
+std::vector<float> scores_h(BATCH_SIZE * DETECTIONS_PER_IMAGE);
+std::vector<float> boxes_h(BATCH_SIZE * DETECTIONS_PER_IMAGE * 4);
+std::vector<float> classes_h(BATCH_SIZE * DETECTIONS_PER_IMAGE);
+std::vector<float> masks_h;
+std::vector<float> data(BATCH_SIZE * INPUT_H * INPUT_W * 3, 0);
+std::vector<void*> buffers;
+std::vector<float*> outputs;
+int num=0;
 int main(int argc, char** argv) {
     cudaSetDevice(DEVICE);
 
     std::string engineFile = "/home/qudoudou/RC2021/src/rcnn_ros/mask.engine";
 
-    std::string imgDir="/home/qudoudou/RC2021/src/rcnn_ros/test";
 
     // calculate ratio
     calculateRatio();
@@ -128,46 +144,31 @@ int main(int argc, char** argv) {
 
     // build engine
     std::cout << "build engine" << std::endl;
-    IRuntime* runtime = createInferRuntime(gLogger);
+    runtime = createInferRuntime(gLogger);
     assert(runtime != nullptr);
-    ICudaEngine* engine = runtime->deserializeCudaEngine(trtModelStream.c_str(), modelSize);
+    engine = runtime->deserializeCudaEngine(trtModelStream.c_str(), modelSize);
     assert(engine != nullptr);
-    IExecutionContext* context = engine->createExecutionContext();
+    context = engine->createExecutionContext();
     assert(context != nullptr);
     runtime->destroy();
 
-    cudaStream_t stream;
+
     CUDA_CHECK(cudaStreamCreate(&stream));
-
-
-
-
-
-    // prepare input file 回头放image的callback函数里
-    std::vector<std::string> fileList;
-    if (read_files_in_dir(imgDir.c_str(), fileList) < 0) {
-        std::cerr << "read_files_in_dir failed." << std::endl;
-        return -1;
-    }
-
-
+    ROS_WARN("engine init done");
 
 
     // prepare input data
-    std::vector<float> data(BATCH_SIZE * INPUT_H * INPUT_W * 3, 0);
+
     void *data_d, *scores_d, *boxes_d, *classes_d, *masks_d;
     CUDA_CHECK(cudaMalloc(&data_d, BATCH_SIZE * INPUT_H * INPUT_W * 3 * sizeof(float)));
     CUDA_CHECK(cudaMalloc(&scores_d, BATCH_SIZE * DETECTIONS_PER_IMAGE * sizeof(float)));
     CUDA_CHECK(cudaMalloc(&boxes_d, BATCH_SIZE * DETECTIONS_PER_IMAGE * 4 * sizeof(float)));
     CUDA_CHECK(cudaMalloc(&classes_d, BATCH_SIZE * DETECTIONS_PER_IMAGE * sizeof(float)));
 
-    std::vector<float> scores_h(BATCH_SIZE * DETECTIONS_PER_IMAGE);
-    std::vector<float> boxes_h(BATCH_SIZE * DETECTIONS_PER_IMAGE * 4);
-    std::vector<float> classes_h(BATCH_SIZE * DETECTIONS_PER_IMAGE);
-    std::vector<float> masks_h;
 
-    std::vector<void*> buffers = { data_d, scores_d, boxes_d, classes_d };
-    std::vector<float*> outputs = {scores_h.data(), boxes_h.data(), classes_h.data()};
+
+    buffers = { data_d, scores_d, boxes_d, classes_d };
+    outputs = {scores_h.data(), boxes_h.data(), classes_h.data()};
 
     //mask on
         CUDA_CHECK(cudaMalloc(&masks_d,
@@ -179,79 +180,18 @@ int main(int argc, char** argv) {
 
 
 
+    ros::init(argc, argv, "rcnn_ros");
+    ros::start();
+    ros::NodeHandle n;
 
-//读一张图片就处理一次
- 	    cv::Mat img = cv::imread(imgDir + "/demo.jpg");
-            if (!img.empty())
-		{
-			img = preprocessImg(img, INPUT_W, INPUT_H);
-            		for (int i = 0; i < INPUT_H * INPUT_W * 3; i++)
-                		data[i] = static_cast<float>(*(img.data + i));
-		}
+    ros::Subscriber imageSub = n.subscribe("/raw_img", 5, &imageCallback);
 
-
-        // Run inference
-        auto start = std::chrono::system_clock::now();
-
-        doInference(*context, stream, buffers, data, outputs);
-
-        auto end = std::chrono::system_clock::now();
-        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms" << std::endl;
-
-        float h_ratio = static_cast<float>(INPUT_H) / IMAGE_HEIGHT;
-        float w_ratio = static_cast<float>(INPUT_W) / IMAGE_WIDTH;
-
-
-
-
-
-            for (int i = 0; i < DETECTIONS_PER_IMAGE; i++) {
-                if (scores_h[i] > SCORE_THRESH) {
-                    float x1 = boxes_h[i * 4 + 0] * w_ratio;
-                    float y1 = boxes_h[i * 4 + 1] * h_ratio;
-                    float x2 = boxes_h[i * 4 + 2] * w_ratio;
-                    float y2 = boxes_h[i * 4 + 3] * h_ratio;
-                    int label = classes_h[i];
-                    float score = scores_h[i];
-                    printf("boxes:[%.6f, %.6f, %.6f, %.6f] scores: %.4f label: %d \n", x1, y1, x2, y2, score, label);
-                    cv::Rect r(x1, y1, x2 - x1, y2 - y1);
-                    cv::rectangle(img, r, cv::Scalar(0x27, 0xC1, 0x36), 2);
-                    cv::putText(img, std::to_string(label), cv::Point(r.x, r.y - 1), cv::FONT_HERSHEY_PLAIN, 1.2,
-                    cv::Scalar(0xFF, 0xFF, 0xFF), 2);
-
-  		    //mask on
-                    if (MASK_ON) {
-                        cv::Mat maskPart = cv::Mat::zeros(cv::Size(POOLER_RESOLUTION, POOLER_RESOLUTION), CV_32FC1);
-                        memcpy(maskPart.data,
-                          &masks_h[i * POOLER_RESOLUTION * POOLER_RESOLUTION],
-                          POOLER_RESOLUTION * POOLER_RESOLUTION * sizeof(float));
-
-                        cv::Rect r(cv::Point(floor(x1) - 1 < 0 ? 0 : floor(x1) - 1,
-                                             floor(y1) - 1 < 0 ? 0 : floor(y1) - 1),
-                                   cv::Point(ceil(x2) + 1 > INPUT_W ? INPUT_W : ceil(x2) + 1,
-                                             ceil(y2) + 1 > INPUT_H ? INPUT_H : ceil(y2) + 1));
-                        cv::resize(maskPart, maskPart, cv::Size(r.width, r.height));
-                        cv::Mat curMask = cv::Mat::zeros(cv::Size(INPUT_W, INPUT_H), CV_8UC1);
-                        cv::threshold(maskPart, maskPart, 0.5, 255, cv::THRESH_BINARY);
-                        curMask(r) += maskPart;
-                        std::vector<std::vector<cv::Point>> contours;
-                        cv::findContours(curMask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_NONE);
-                        for (int c = 0; c < contours.size(); c++)
-                            cv::drawContours(img, contours, c, cv::Scalar(0, 0, 255));
-                    }
-                     //mask on
-                }
-            }
-            cv::imwrite("/home/qudoudou/RC2021/src/rcnn_ros/test/result.jpg", img);
-        
-
-
-
-
-
-
-
-
+    ros::Rate loop_rate(30);
+    while (ros::ok())
+    {
+	ros::spinOnce();
+	loop_rate.sleep();
+    }
 
     cudaStreamDestroy(stream);
     CUDA_CHECK(cudaFree(data_d));
@@ -266,3 +206,72 @@ int main(int argc, char** argv) {
 
     return 0;
 }
+
+void imageCallback(const mv_driver::raw_imgPtr& msg)
+{
+	num++;	//读一张图片就处理一次
+
+	cv::Mat img = cv_bridge::toCvCopy(msg->color, sensor_msgs::image_encodings::BGR8)->image;
+	if (!img.empty())
+	{
+		img = preprocessImg(img, INPUT_W, INPUT_H);
+		for (int i = 0; i < INPUT_H * INPUT_W * 3; i++)
+			data[i] = static_cast<float>(*(img.data + i));
+
+		// Run inference
+		auto start = std::chrono::system_clock::now();
+
+		doInference(*context, stream, buffers, data, outputs);
+
+		auto end = std::chrono::system_clock::now();
+		std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms" << std::endl;
+
+		float h_ratio = static_cast<float>(INPUT_H) / IMAGE_HEIGHT;
+		float w_ratio = static_cast<float>(INPUT_W) / IMAGE_WIDTH;
+
+		for (int i = 0; i < DETECTIONS_PER_IMAGE; i++) {
+		        if (scores_h[i] > SCORE_THRESH) {
+		            float x1 = boxes_h[i * 4 + 0] * w_ratio;
+		            float y1 = boxes_h[i * 4 + 1] * h_ratio;
+		            float x2 = boxes_h[i * 4 + 2] * w_ratio;
+		            float y2 = boxes_h[i * 4 + 3] * h_ratio;
+		            int label = classes_h[i];
+		            float score = scores_h[i];
+		            printf("boxes:[%.6f, %.6f, %.6f, %.6f] scores: %.4f label: %d \n", x1, y1, x2, y2, score, label);
+		            cv::Rect r(x1, y1, x2 - x1, y2 - y1);
+		            cv::rectangle(img, r, cv::Scalar(0x27, 0xC1, 0x36), 2);
+		            cv::putText(img, std::to_string(label), cv::Point(r.x, r.y - 1), cv::FONT_HERSHEY_PLAIN, 1.2,
+		            cv::Scalar(0xFF, 0xFF, 0xFF), 2);
+
+	  		    //mask on
+		            if (MASK_ON) {
+		                cv::Mat maskPart = cv::Mat::zeros(cv::Size(POOLER_RESOLUTION, POOLER_RESOLUTION), CV_32FC1);
+		                memcpy(maskPart.data,
+		                  &masks_h[i * POOLER_RESOLUTION * POOLER_RESOLUTION],
+		                  POOLER_RESOLUTION * POOLER_RESOLUTION * sizeof(float));
+
+		                cv::Rect r(cv::Point(floor(x1) - 1 < 0 ? 0 : floor(x1) - 1,
+		                                     floor(y1) - 1 < 0 ? 0 : floor(y1) - 1),
+		                           cv::Point(ceil(x2) + 1 > INPUT_W ? INPUT_W : ceil(x2) + 1,
+		                                     ceil(y2) + 1 > INPUT_H ? INPUT_H : ceil(y2) + 1));
+		                cv::resize(maskPart, maskPart, cv::Size(r.width, r.height));
+		                cv::Mat curMask = cv::Mat::zeros(cv::Size(INPUT_W, INPUT_H), CV_8UC1);
+		                cv::threshold(maskPart, maskPart, 0.5, 255, cv::THRESH_BINARY);
+		                curMask(r) += maskPart;
+		                std::vector<std::vector<cv::Point>> contours;
+		                cv::findContours(curMask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_NONE);
+		                for (int c = 0; c < contours.size(); c++)
+		                    cv::drawContours(img, contours, c, cv::Scalar(0, 0, 255));
+				if(contours.size()!=0)
+					cv::imwrite("/home/qudoudou/RC2021/src/rcnn_ros/test/result_"+std::to_string(num)+".jpg",img);
+		            }
+		             //mask on
+		        }
+		    }
+
+		}
+
+
+
+}
+

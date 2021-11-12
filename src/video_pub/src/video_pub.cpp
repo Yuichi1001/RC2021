@@ -26,7 +26,7 @@ Size small_size = Size(640, 480);
 Size dist_size=small_size;
 
 //add your video path here
-string video_source="your path";
+string video_source="/home/qudoudou/RC2021/src/video_pub/test.mp4";
 
 
 

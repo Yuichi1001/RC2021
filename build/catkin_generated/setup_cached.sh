@@ -8,3 +8,4 @@
 
 # modified environment variables
 export PWD='/home/qudoudou/RC2021/build'
+export PYTHONPATH='/home/qudoudou/RC2021/devel/lib/python2.7/dist-packages:/opt/ros/melodic/lib/python2.7/dist-packages:/home/qudoudou/cv_bridge_ws/install/lib/python3/dist-packages'

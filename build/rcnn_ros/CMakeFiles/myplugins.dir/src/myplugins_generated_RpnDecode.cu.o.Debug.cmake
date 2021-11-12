@@ -79,7 +79,7 @@ set(CUDA_NVCC_FLAGS_MINSIZEREL  ; )
 set(CUDA_NVCC_FLAGS_RELEASE  ; )
 set(CUDA_NVCC_FLAGS_RELWITHDEBINFO  ; )
 set(nvcc_flags -m64;--std;c++11;-Dmyplugins_EXPORTS) # list
-set(CUDA_NVCC_INCLUDE_DIRS "/usr/local/cuda-10.2/include;/home/qudoudou/RC2021/devel/include;/usr/local/cuda-10.2/include;/home/qudoudou/TensorRT-7.2.1.6/include;/home/qudoudou/RC2021/devel/include;/opt/ros/melodic/include;/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp;/usr/include;/usr/include/opencv;/usr/local/include/opencv4") # list (needs to be in quotes to handle spaces properly).
+set(CUDA_NVCC_INCLUDE_DIRS "/usr/local/cuda-10.2/include;/home/qudoudou/RC2021/devel/include;/usr/local/cuda-10.2/include;/home/qudoudou/TensorRT-7.2.1.6/include;/home/qudoudou/RC2021/devel/include;/opt/ros/melodic/include;/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp;/usr/include;/usr/include/opencv;/home/qudoudou/RC2021/src/rcnn_ros/OpenCV_INCLUDE_DIRS") # list (needs to be in quotes to handle spaces properly).
 set(CUDA_NVCC_COMPILE_DEFINITIONS [==[ROS_BUILD_SHARED_LIBS=1;ROS_BUILD_SHARED_LIBS=1;ROS_PACKAGE_NAME="rcnn_ros";ROSCONSOLE_BACKEND_LOG4CXX]==]) # list (needs to be in lua quotes see #16510 ).
 set(format_flag "-c") # string
 set(cuda_language_flag ) # list

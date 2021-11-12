@@ -26,9 +26,9 @@ cuda_add_library(myplugins SHARED src/BatchedNms.cu src/PredictorDecode.cu src/R
 
 find_package(
   catkin REQUIRED COMPONENTS
+  cv_bridge
   roscpp
   rospy
-  cv_bridge
   image_transport 
   mv_driver
   message_generation
@@ -57,8 +57,8 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-find_package(OpenCV 4 REQUIRED)
-include_directories(${OpenCV_INCLUDE_DIRS})
+find_package(OpenCV 3 REQUIRED)
+include_directories(OpenCV_INCLUDE_DIRS)
 
 add_executable(${PROJECT_NAME}_node src/rcnn.cpp)
 
