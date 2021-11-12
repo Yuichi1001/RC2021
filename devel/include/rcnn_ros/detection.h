@@ -15,6 +15,7 @@
 #include <ros/builtin_message_traits.h>
 #include <ros/message_operations.h>
 
+#include <rcnn_ros/point.h>
 
 namespace rcnn_ros
 {
@@ -24,42 +25,47 @@ struct detection_
   typedef detection_<ContainerAllocator> Type;
 
   detection_()
-    : class_id(0.0)
-    , conf(0.0)
-    , x_axis(0.0)
-    , y_axis(0.0)
-    , weight(0.0)
-    , height(0.0)  {
+    : label(0)
+    , score(0.0)
+    , x1(0.0)
+    , y1(0.0)
+    , x2(0.0)
+    , y2(0.0)
+    , contours()  {
     }
   detection_(const ContainerAllocator& _alloc)
-    : class_id(0.0)
-    , conf(0.0)
-    , x_axis(0.0)
-    , y_axis(0.0)
-    , weight(0.0)
-    , height(0.0)  {
+    : label(0)
+    , score(0.0)
+    , x1(0.0)
+    , y1(0.0)
+    , x2(0.0)
+    , y2(0.0)
+    , contours(_alloc)  {
   (void)_alloc;
     }
 
 
 
-   typedef float _class_id_type;
-  _class_id_type class_id;
+   typedef int32_t _label_type;
+  _label_type label;
 
-   typedef float _conf_type;
-  _conf_type conf;
+   typedef float _score_type;
+  _score_type score;
 
-   typedef float _x_axis_type;
-  _x_axis_type x_axis;
+   typedef float _x1_type;
+  _x1_type x1;
 
-   typedef float _y_axis_type;
-  _y_axis_type y_axis;
+   typedef float _y1_type;
+  _y1_type y1;
 
-   typedef float _weight_type;
-  _weight_type weight;
+   typedef float _x2_type;
+  _x2_type x2;
 
-   typedef float _height_type;
-  _height_type height;
+   typedef float _y2_type;
+  _y2_type y2;
+
+   typedef std::vector< ::rcnn_ros::point_<ContainerAllocator> , typename ContainerAllocator::template rebind< ::rcnn_ros::point_<ContainerAllocator> >::other >  _contours_type;
+  _contours_type contours;
 
 
 
@@ -90,12 +96,13 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::rcnn_ros::detection_<ContainerAllocator1> & lhs, const ::rcnn_ros::detection_<ContainerAllocator2> & rhs)
 {
-  return lhs.class_id == rhs.class_id &&
-    lhs.conf == rhs.conf &&
-    lhs.x_axis == rhs.x_axis &&
-    lhs.y_axis == rhs.y_axis &&
-    lhs.weight == rhs.weight &&
-    lhs.height == rhs.height;
+  return lhs.label == rhs.label &&
+    lhs.score == rhs.score &&
+    lhs.x1 == rhs.x1 &&
+    lhs.y1 == rhs.y1 &&
+    lhs.x2 == rhs.x2 &&
+    lhs.y2 == rhs.y2 &&
+    lhs.contours == rhs.contours;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -118,12 +125,12 @@ namespace message_traits
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::rcnn_ros::detection_<ContainerAllocator> >
-  : TrueType
+  : FalseType
   { };
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::rcnn_ros::detection_<ContainerAllocator> const>
-  : TrueType
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -152,12 +159,12 @@ struct MD5Sum< ::rcnn_ros::detection_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "18249658e877a86d85ab6523f10897f4";
+    return "54dfb3fadd948f9a528ccd7979566a61";
   }
 
   static const char* value(const ::rcnn_ros::detection_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x18249658e877a86dULL;
-  static const uint64_t static_value2 = 0x85ab6523f10897f4ULL;
+  static const uint64_t static_value1 = 0x54dfb3fadd948f9aULL;
+  static const uint64_t static_value2 = 0x528ccd7979566a61ULL;
 };
 
 template<class ContainerAllocator>
@@ -176,12 +183,18 @@ struct Definition< ::rcnn_ros::detection_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "float32 class_id\n"
-"float32 conf\n"
-"float32 x_axis\n"
-"float32 y_axis\n"
-"float32 weight\n"
-"float32 height\n"
+    return "int32 label\n"
+"float32 score\n"
+"float32 x1\n"
+"float32 y1\n"
+"float32 x2\n"
+"float32 y2\n"
+"rcnn_ros/point[] contours\n"
+"\n"
+"================================================================================\n"
+"MSG: rcnn_ros/point\n"
+"int32 x\n"
+"int32 y\n"
 ;
   }
 
@@ -200,12 +213,13 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.class_id);
-      stream.next(m.conf);
-      stream.next(m.x_axis);
-      stream.next(m.y_axis);
-      stream.next(m.weight);
-      stream.next(m.height);
+      stream.next(m.label);
+      stream.next(m.score);
+      stream.next(m.x1);
+      stream.next(m.y1);
+      stream.next(m.x2);
+      stream.next(m.y2);
+      stream.next(m.contours);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -224,18 +238,26 @@ struct Printer< ::rcnn_ros::detection_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::rcnn_ros::detection_<ContainerAllocator>& v)
   {
-    s << indent << "class_id: ";
-    Printer<float>::stream(s, indent + "  ", v.class_id);
-    s << indent << "conf: ";
-    Printer<float>::stream(s, indent + "  ", v.conf);
-    s << indent << "x_axis: ";
-    Printer<float>::stream(s, indent + "  ", v.x_axis);
-    s << indent << "y_axis: ";
-    Printer<float>::stream(s, indent + "  ", v.y_axis);
-    s << indent << "weight: ";
-    Printer<float>::stream(s, indent + "  ", v.weight);
-    s << indent << "height: ";
-    Printer<float>::stream(s, indent + "  ", v.height);
+    s << indent << "label: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.label);
+    s << indent << "score: ";
+    Printer<float>::stream(s, indent + "  ", v.score);
+    s << indent << "x1: ";
+    Printer<float>::stream(s, indent + "  ", v.x1);
+    s << indent << "y1: ";
+    Printer<float>::stream(s, indent + "  ", v.y1);
+    s << indent << "x2: ";
+    Printer<float>::stream(s, indent + "  ", v.x2);
+    s << indent << "y2: ";
+    Printer<float>::stream(s, indent + "  ", v.y2);
+    s << indent << "contours[]" << std::endl;
+    for (size_t i = 0; i < v.contours.size(); ++i)
+    {
+      s << indent << "  contours[" << i << "]: ";
+      s << std::endl;
+      s << indent;
+      Printer< ::rcnn_ros::point_<ContainerAllocator> >::stream(s, indent + "    ", v.contours[i]);
+    }
   }
 };
 

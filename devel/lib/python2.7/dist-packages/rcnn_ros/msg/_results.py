@@ -10,7 +10,7 @@ import genpy
 import rcnn_ros.msg
 
 class results(genpy.Message):
-  _md5sum = "03a8813cbb2e4cc1ddfa64bafe3af10c"
+  _md5sum = "128a74f45c3c1bb074f854b411cdfc9d"
   _type = "rcnn_ros/results"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """time stamp
@@ -18,12 +18,19 @@ rcnn_ros/detection[] results
 
 ================================================================================
 MSG: rcnn_ros/detection
-float32 class_id
-float32 conf
-float32 x_axis
-float32 y_axis
-float32 weight
-float32 height"""
+int32 label
+float32 score
+float32 x1
+float32 y1
+float32 x2
+float32 y2
+rcnn_ros/point[] contours
+
+================================================================================
+MSG: rcnn_ros/point
+int32 x
+int32 y
+"""
   __slots__ = ['stamp','results']
   _slot_types = ['time','rcnn_ros/detection[]']
 
@@ -70,7 +77,12 @@ float32 height"""
       buff.write(_struct_I.pack(length))
       for val1 in self.results:
         _x = val1
-        buff.write(_get_struct_6f().pack(_x.class_id, _x.conf, _x.x_axis, _x.y_axis, _x.weight, _x.height))
+        buff.write(_get_struct_i5f().pack(_x.label, _x.score, _x.x1, _x.y1, _x.x2, _x.y2))
+        length = len(val1.contours)
+        buff.write(_struct_I.pack(length))
+        for val2 in val1.contours:
+          _x = val2
+          buff.write(_get_struct_2i().pack(_x.x, _x.y))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -100,7 +112,18 @@ float32 height"""
         _x = val1
         start = end
         end += 24
-        (_x.class_id, _x.conf, _x.x_axis, _x.y_axis, _x.weight, _x.height,) = _get_struct_6f().unpack(str[start:end])
+        (_x.label, _x.score, _x.x1, _x.y1, _x.x2, _x.y2,) = _get_struct_i5f().unpack(str[start:end])
+        start = end
+        end += 4
+        (length,) = _struct_I.unpack(str[start:end])
+        val1.contours = []
+        for i in range(0, length):
+          val2 = rcnn_ros.msg.point()
+          _x = val2
+          start = end
+          end += 8
+          (_x.x, _x.y,) = _get_struct_2i().unpack(str[start:end])
+          val1.contours.append(val2)
         self.results.append(val1)
       self.stamp.canon()
       return self
@@ -121,7 +144,12 @@ float32 height"""
       buff.write(_struct_I.pack(length))
       for val1 in self.results:
         _x = val1
-        buff.write(_get_struct_6f().pack(_x.class_id, _x.conf, _x.x_axis, _x.y_axis, _x.weight, _x.height))
+        buff.write(_get_struct_i5f().pack(_x.label, _x.score, _x.x1, _x.y1, _x.x2, _x.y2))
+        length = len(val1.contours)
+        buff.write(_struct_I.pack(length))
+        for val2 in val1.contours:
+          _x = val2
+          buff.write(_get_struct_2i().pack(_x.x, _x.y))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -152,7 +180,18 @@ float32 height"""
         _x = val1
         start = end
         end += 24
-        (_x.class_id, _x.conf, _x.x_axis, _x.y_axis, _x.weight, _x.height,) = _get_struct_6f().unpack(str[start:end])
+        (_x.label, _x.score, _x.x1, _x.y1, _x.x2, _x.y2,) = _get_struct_i5f().unpack(str[start:end])
+        start = end
+        end += 4
+        (length,) = _struct_I.unpack(str[start:end])
+        val1.contours = []
+        for i in range(0, length):
+          val2 = rcnn_ros.msg.point()
+          _x = val2
+          start = end
+          end += 8
+          (_x.x, _x.y,) = _get_struct_2i().unpack(str[start:end])
+          val1.contours.append(val2)
         self.results.append(val1)
       self.stamp.canon()
       return self
@@ -169,9 +208,15 @@ def _get_struct_2I():
     if _struct_2I is None:
         _struct_2I = struct.Struct("<2I")
     return _struct_2I
-_struct_6f = None
-def _get_struct_6f():
-    global _struct_6f
-    if _struct_6f is None:
-        _struct_6f = struct.Struct("<6f")
-    return _struct_6f
+_struct_2i = None
+def _get_struct_2i():
+    global _struct_2i
+    if _struct_2i is None:
+        _struct_2i = struct.Struct("<2i")
+    return _struct_2i
+_struct_i5f = None
+def _get_struct_i5f():
+    global _struct_i5f
+    if _struct_i5f is None:
+        _struct_i5f = struct.Struct("<i5f")
+    return _struct_i5f

@@ -101,6 +101,17 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -123,17 +134,6 @@ install/strip/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -183,6 +183,21 @@ rcnn_ros_generate_messages_cpp/fast:
 .PHONY : rcnn_ros_generate_messages_cpp/fast
 
 # Convenience name for target.
+rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_point.dir/rule:
+	cd /home/qudoudou/RC2021/build && $(MAKE) -f CMakeFiles/Makefile2 rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_point.dir/rule
+.PHONY : rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_point.dir/rule
+
+# Convenience name for target.
+_rcnn_ros_generate_messages_check_deps_point: rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_point.dir/rule
+
+.PHONY : _rcnn_ros_generate_messages_check_deps_point
+
+# fast build rule for target.
+_rcnn_ros_generate_messages_check_deps_point/fast:
+	cd /home/qudoudou/RC2021/build && $(MAKE) -f rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_point.dir/build.make rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_point.dir/build
+.PHONY : _rcnn_ros_generate_messages_check_deps_point/fast
+
+# Convenience name for target.
 rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_detection.dir/rule:
 	cd /home/qudoudou/RC2021/build && $(MAKE) -f CMakeFiles/Makefile2 rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_detection.dir/rule
 .PHONY : rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_detection.dir/rule
@@ -213,21 +228,6 @@ rcnn_ros_generate_messages_nodejs/fast:
 .PHONY : rcnn_ros_generate_messages_nodejs/fast
 
 # Convenience name for target.
-rcnn_ros/CMakeFiles/rcnn_ros_gencpp.dir/rule:
-	cd /home/qudoudou/RC2021/build && $(MAKE) -f CMakeFiles/Makefile2 rcnn_ros/CMakeFiles/rcnn_ros_gencpp.dir/rule
-.PHONY : rcnn_ros/CMakeFiles/rcnn_ros_gencpp.dir/rule
-
-# Convenience name for target.
-rcnn_ros_gencpp: rcnn_ros/CMakeFiles/rcnn_ros_gencpp.dir/rule
-
-.PHONY : rcnn_ros_gencpp
-
-# fast build rule for target.
-rcnn_ros_gencpp/fast:
-	cd /home/qudoudou/RC2021/build && $(MAKE) -f rcnn_ros/CMakeFiles/rcnn_ros_gencpp.dir/build.make rcnn_ros/CMakeFiles/rcnn_ros_gencpp.dir/build
-.PHONY : rcnn_ros_gencpp/fast
-
-# Convenience name for target.
 rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_results.dir/rule:
 	cd /home/qudoudou/RC2021/build && $(MAKE) -f CMakeFiles/Makefile2 rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_results.dir/rule
 .PHONY : rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_results.dir/rule
@@ -241,6 +241,21 @@ _rcnn_ros_generate_messages_check_deps_results: rcnn_ros/CMakeFiles/_rcnn_ros_ge
 _rcnn_ros_generate_messages_check_deps_results/fast:
 	cd /home/qudoudou/RC2021/build && $(MAKE) -f rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_results.dir/build.make rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_results.dir/build
 .PHONY : _rcnn_ros_generate_messages_check_deps_results/fast
+
+# Convenience name for target.
+rcnn_ros/CMakeFiles/rcnn_ros_gencpp.dir/rule:
+	cd /home/qudoudou/RC2021/build && $(MAKE) -f CMakeFiles/Makefile2 rcnn_ros/CMakeFiles/rcnn_ros_gencpp.dir/rule
+.PHONY : rcnn_ros/CMakeFiles/rcnn_ros_gencpp.dir/rule
+
+# Convenience name for target.
+rcnn_ros_gencpp: rcnn_ros/CMakeFiles/rcnn_ros_gencpp.dir/rule
+
+.PHONY : rcnn_ros_gencpp
+
+# fast build rule for target.
+rcnn_ros_gencpp/fast:
+	cd /home/qudoudou/RC2021/build && $(MAKE) -f rcnn_ros/CMakeFiles/rcnn_ros_gencpp.dir/build.make rcnn_ros/CMakeFiles/rcnn_ros_gencpp.dir/build
+.PHONY : rcnn_ros_gencpp/fast
 
 # Convenience name for target.
 rcnn_ros/CMakeFiles/rcnn_ros_geneus.dir/rule:
@@ -429,17 +444,18 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... edit_cache"
+	@echo "... test"
 	@echo "... rcnn_ros_generate_messages_cpp"
+	@echo "... _rcnn_ros_generate_messages_check_deps_point"
 	@echo "... rebuild_cache"
 	@echo "... _rcnn_ros_generate_messages_check_deps_detection"
 	@echo "... install/strip"
 	@echo "... rcnn_ros_generate_messages_nodejs"
-	@echo "... rcnn_ros_gencpp"
 	@echo "... _rcnn_ros_generate_messages_check_deps_results"
+	@echo "... rcnn_ros_gencpp"
 	@echo "... rcnn_ros_geneus"
 	@echo "... rcnn_ros_generate_messages_lisp"
 	@echo "... rcnn_ros_generate_messages"
-	@echo "... test"
 	@echo "... rcnn_ros_generate_messages_eus"
 	@echo "... rcnn_ros_generate_messages_py"
 	@echo "... rcnn_ros_gennodejs"

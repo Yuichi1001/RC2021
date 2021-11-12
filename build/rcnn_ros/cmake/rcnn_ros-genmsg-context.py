@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
-messages_str = "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg;/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg"
+messages_str = "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg;/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg;/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
 services_str = ""
 pkg_name = "rcnn_ros"
 dependencies_str = ""

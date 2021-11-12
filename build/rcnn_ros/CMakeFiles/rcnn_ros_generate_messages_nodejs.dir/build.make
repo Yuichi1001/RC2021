@@ -53,22 +53,31 @@ CMAKE_BINARY_DIR = /home/qudoudou/RC2021/build
 # Include the progress variables for this target.
 include rcnn_ros/CMakeFiles/rcnn_ros_generate_messages_nodejs.dir/progress.make
 
+rcnn_ros/CMakeFiles/rcnn_ros_generate_messages_nodejs: /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/point.js
 rcnn_ros/CMakeFiles/rcnn_ros_generate_messages_nodejs: /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/results.js
 rcnn_ros/CMakeFiles/rcnn_ros_generate_messages_nodejs: /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/detection.js
 
 
+/home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/point.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
+/home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/point.js: /home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qudoudou/RC2021/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from rcnn_ros/point.msg"
+	cd /home/qudoudou/RC2021/build/rcnn_ros && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg -Ircnn_ros:/home/qudoudou/RC2021/src/rcnn_ros/msg -p rcnn_ros -o /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg
+
 /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/results.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
 /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/results.js: /home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg
 /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/results.js: /home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qudoudou/RC2021/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from rcnn_ros/results.msg"
+/home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/results.js: /home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qudoudou/RC2021/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from rcnn_ros/results.msg"
 	cd /home/qudoudou/RC2021/build/rcnn_ros && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg -Ircnn_ros:/home/qudoudou/RC2021/src/rcnn_ros/msg -p rcnn_ros -o /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg
 
 /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/detection.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
 /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/detection.js: /home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qudoudou/RC2021/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from rcnn_ros/detection.msg"
+/home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/detection.js: /home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qudoudou/RC2021/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Javascript code from rcnn_ros/detection.msg"
 	cd /home/qudoudou/RC2021/build/rcnn_ros && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg -Ircnn_ros:/home/qudoudou/RC2021/src/rcnn_ros/msg -p rcnn_ros -o /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg
 
 rcnn_ros_generate_messages_nodejs: rcnn_ros/CMakeFiles/rcnn_ros_generate_messages_nodejs
+rcnn_ros_generate_messages_nodejs: /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/point.js
 rcnn_ros_generate_messages_nodejs: /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/results.js
 rcnn_ros_generate_messages_nodejs: /home/qudoudou/RC2021/devel/share/gennodejs/ros/rcnn_ros/msg/detection.js
 rcnn_ros_generate_messages_nodejs: rcnn_ros/CMakeFiles/rcnn_ros_generate_messages_nodejs.dir/build.make

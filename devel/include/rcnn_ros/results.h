@@ -129,12 +129,12 @@ struct MD5Sum< ::rcnn_ros::results_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "03a8813cbb2e4cc1ddfa64bafe3af10c";
+    return "128a74f45c3c1bb074f854b411cdfc9d";
   }
 
   static const char* value(const ::rcnn_ros::results_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x03a8813cbb2e4cc1ULL;
-  static const uint64_t static_value2 = 0xddfa64bafe3af10cULL;
+  static const uint64_t static_value1 = 0x128a74f45c3c1bb0ULL;
+  static const uint64_t static_value2 = 0x74f854b411cdfc9dULL;
 };
 
 template<class ContainerAllocator>
@@ -158,12 +158,18 @@ struct Definition< ::rcnn_ros::results_<ContainerAllocator> >
 "\n"
 "================================================================================\n"
 "MSG: rcnn_ros/detection\n"
-"float32 class_id\n"
-"float32 conf\n"
-"float32 x_axis\n"
-"float32 y_axis\n"
-"float32 weight\n"
-"float32 height\n"
+"int32 label\n"
+"float32 score\n"
+"float32 x1\n"
+"float32 y1\n"
+"float32 x2\n"
+"float32 y2\n"
+"rcnn_ros/point[] contours\n"
+"\n"
+"================================================================================\n"
+"MSG: rcnn_ros/point\n"
+"int32 x\n"
+"int32 y\n"
 ;
   }
 

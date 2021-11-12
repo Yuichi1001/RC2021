@@ -53,29 +53,39 @@ CMAKE_BINARY_DIR = /home/qudoudou/RC2021/build
 # Include the progress variables for this target.
 include rcnn_ros/CMakeFiles/rcnn_ros_generate_messages_py.dir/progress.make
 
+rcnn_ros/CMakeFiles/rcnn_ros_generate_messages_py: /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_point.py
 rcnn_ros/CMakeFiles/rcnn_ros_generate_messages_py: /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_results.py
 rcnn_ros/CMakeFiles/rcnn_ros_generate_messages_py: /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_detection.py
 rcnn_ros/CMakeFiles/rcnn_ros_generate_messages_py: /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/__init__.py
 
 
+/home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_point.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
+/home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_point.py: /home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qudoudou/RC2021/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG rcnn_ros/point"
+	cd /home/qudoudou/RC2021/build/rcnn_ros && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg -Ircnn_ros:/home/qudoudou/RC2021/src/rcnn_ros/msg -p rcnn_ros -o /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg
+
 /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_results.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
 /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_results.py: /home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg
 /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_results.py: /home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qudoudou/RC2021/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG rcnn_ros/results"
+/home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_results.py: /home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qudoudou/RC2021/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG rcnn_ros/results"
 	cd /home/qudoudou/RC2021/build/rcnn_ros && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg -Ircnn_ros:/home/qudoudou/RC2021/src/rcnn_ros/msg -p rcnn_ros -o /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg
 
 /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_detection.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
 /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_detection.py: /home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qudoudou/RC2021/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG rcnn_ros/detection"
+/home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_detection.py: /home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qudoudou/RC2021/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python from MSG rcnn_ros/detection"
 	cd /home/qudoudou/RC2021/build/rcnn_ros && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg -Ircnn_ros:/home/qudoudou/RC2021/src/rcnn_ros/msg -p rcnn_ros -o /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg
 
 /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/__init__.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
+/home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/__init__.py: /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_point.py
 /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/__init__.py: /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_results.py
 /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/__init__.py: /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_detection.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qudoudou/RC2021/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python msg __init__.py for rcnn_ros"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qudoudou/RC2021/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python msg __init__.py for rcnn_ros"
 	cd /home/qudoudou/RC2021/build/rcnn_ros && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg --initpy
 
 rcnn_ros_generate_messages_py: rcnn_ros/CMakeFiles/rcnn_ros_generate_messages_py
+rcnn_ros_generate_messages_py: /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_point.py
 rcnn_ros_generate_messages_py: /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_results.py
 rcnn_ros_generate_messages_py: /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/_detection.py
 rcnn_ros_generate_messages_py: /home/qudoudou/RC2021/devel/lib/python2.7/dist-packages/rcnn_ros/msg/__init__.py

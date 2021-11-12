@@ -3,6 +3,8 @@
   (:export
    "<DETECTION>"
    "DETECTION"
+   "<POINT>"
+   "POINT"
    "<RESULTS>"
    "RESULTS"
   ))

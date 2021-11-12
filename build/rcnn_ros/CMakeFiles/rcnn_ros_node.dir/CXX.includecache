@@ -41,6 +41,24 @@ ros/builtin_message_traits.h
 -
 ros/message_operations.h
 -
+rcnn_ros/point.h
+-
+
+/home/qudoudou/RC2021/devel/include/rcnn_ros/point.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
 
 /home/qudoudou/RC2021/devel/include/rcnn_ros/results.h
 string
@@ -223,6 +241,8 @@ rcnn_ros/detection.h
 /home/qudoudou/RC2021/src/rcnn_ros/src/rcnn_ros/detection.h
 rcnn_ros/results.h
 /home/qudoudou/RC2021/src/rcnn_ros/src/rcnn_ros/results.h
+rcnn_ros/point.h
+/home/qudoudou/RC2021/src/rcnn_ros/src/rcnn_ros/point.h
 cv_bridge/cv_bridge.h
 -
 ros/ros.h

@@ -41,6 +41,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rcnn_ros/msg" TYPE FILE FILES
     "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg"
     "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg"
+    "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
     )
 endif()
 

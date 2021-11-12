@@ -11,6 +11,7 @@ const _deserializer = _ros_msg_utils.Deserialize;
 const _arrayDeserializer = _deserializer.Array;
 const _finder = _ros_msg_utils.Find;
 const _getByteLength = _ros_msg_utils.getByteLength;
+let point = require('./point.js');
 
 //-----------------------------------------------------------
 
@@ -18,67 +19,80 @@ class detection {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
-      this.class_id = null;
-      this.conf = null;
-      this.x_axis = null;
-      this.y_axis = null;
-      this.weight = null;
-      this.height = null;
+      this.label = null;
+      this.score = null;
+      this.x1 = null;
+      this.y1 = null;
+      this.x2 = null;
+      this.y2 = null;
+      this.contours = null;
     }
     else {
-      if (initObj.hasOwnProperty('class_id')) {
-        this.class_id = initObj.class_id
+      if (initObj.hasOwnProperty('label')) {
+        this.label = initObj.label
       }
       else {
-        this.class_id = 0.0;
+        this.label = 0;
       }
-      if (initObj.hasOwnProperty('conf')) {
-        this.conf = initObj.conf
-      }
-      else {
-        this.conf = 0.0;
-      }
-      if (initObj.hasOwnProperty('x_axis')) {
-        this.x_axis = initObj.x_axis
+      if (initObj.hasOwnProperty('score')) {
+        this.score = initObj.score
       }
       else {
-        this.x_axis = 0.0;
+        this.score = 0.0;
       }
-      if (initObj.hasOwnProperty('y_axis')) {
-        this.y_axis = initObj.y_axis
-      }
-      else {
-        this.y_axis = 0.0;
-      }
-      if (initObj.hasOwnProperty('weight')) {
-        this.weight = initObj.weight
+      if (initObj.hasOwnProperty('x1')) {
+        this.x1 = initObj.x1
       }
       else {
-        this.weight = 0.0;
+        this.x1 = 0.0;
       }
-      if (initObj.hasOwnProperty('height')) {
-        this.height = initObj.height
+      if (initObj.hasOwnProperty('y1')) {
+        this.y1 = initObj.y1
       }
       else {
-        this.height = 0.0;
+        this.y1 = 0.0;
+      }
+      if (initObj.hasOwnProperty('x2')) {
+        this.x2 = initObj.x2
+      }
+      else {
+        this.x2 = 0.0;
+      }
+      if (initObj.hasOwnProperty('y2')) {
+        this.y2 = initObj.y2
+      }
+      else {
+        this.y2 = 0.0;
+      }
+      if (initObj.hasOwnProperty('contours')) {
+        this.contours = initObj.contours
+      }
+      else {
+        this.contours = [];
       }
     }
   }
 
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type detection
-    // Serialize message field [class_id]
-    bufferOffset = _serializer.float32(obj.class_id, buffer, bufferOffset);
-    // Serialize message field [conf]
-    bufferOffset = _serializer.float32(obj.conf, buffer, bufferOffset);
-    // Serialize message field [x_axis]
-    bufferOffset = _serializer.float32(obj.x_axis, buffer, bufferOffset);
-    // Serialize message field [y_axis]
-    bufferOffset = _serializer.float32(obj.y_axis, buffer, bufferOffset);
-    // Serialize message field [weight]
-    bufferOffset = _serializer.float32(obj.weight, buffer, bufferOffset);
-    // Serialize message field [height]
-    bufferOffset = _serializer.float32(obj.height, buffer, bufferOffset);
+    // Serialize message field [label]
+    bufferOffset = _serializer.int32(obj.label, buffer, bufferOffset);
+    // Serialize message field [score]
+    bufferOffset = _serializer.float32(obj.score, buffer, bufferOffset);
+    // Serialize message field [x1]
+    bufferOffset = _serializer.float32(obj.x1, buffer, bufferOffset);
+    // Serialize message field [y1]
+    bufferOffset = _serializer.float32(obj.y1, buffer, bufferOffset);
+    // Serialize message field [x2]
+    bufferOffset = _serializer.float32(obj.x2, buffer, bufferOffset);
+    // Serialize message field [y2]
+    bufferOffset = _serializer.float32(obj.y2, buffer, bufferOffset);
+    // Serialize message field [contours]
+    // Serialize the length for message field [contours]
+    bufferOffset = _serializer.uint32(obj.contours.length, buffer, bufferOffset);
+    obj.contours.forEach((val) => {
+      bufferOffset = point.serialize(val, buffer, bufferOffset);
+    });
     return bufferOffset;
   }
 
@@ -86,23 +100,32 @@ class detection {
     //deserializes a message object of type detection
     let len;
     let data = new detection(null);
-    // Deserialize message field [class_id]
-    data.class_id = _deserializer.float32(buffer, bufferOffset);
-    // Deserialize message field [conf]
-    data.conf = _deserializer.float32(buffer, bufferOffset);
-    // Deserialize message field [x_axis]
-    data.x_axis = _deserializer.float32(buffer, bufferOffset);
-    // Deserialize message field [y_axis]
-    data.y_axis = _deserializer.float32(buffer, bufferOffset);
-    // Deserialize message field [weight]
-    data.weight = _deserializer.float32(buffer, bufferOffset);
-    // Deserialize message field [height]
-    data.height = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [label]
+    data.label = _deserializer.int32(buffer, bufferOffset);
+    // Deserialize message field [score]
+    data.score = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [x1]
+    data.x1 = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [y1]
+    data.y1 = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [x2]
+    data.x2 = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [y2]
+    data.y2 = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [contours]
+    // Deserialize array length for message field [contours]
+    len = _deserializer.uint32(buffer, bufferOffset);
+    data.contours = new Array(len);
+    for (let i = 0; i < len; ++i) {
+      data.contours[i] = point.deserialize(buffer, bufferOffset)
+    }
     return data;
   }
 
   static getMessageSize(object) {
-    return 24;
+    let length = 0;
+    length += 8 * object.contours.length;
+    return length + 28;
   }
 
   static datatype() {
@@ -112,18 +135,25 @@ class detection {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '18249658e877a86d85ab6523f10897f4';
+    return '54dfb3fadd948f9a528ccd7979566a61';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    float32 class_id
-    float32 conf
-    float32 x_axis
-    float32 y_axis
-    float32 weight
-    float32 height
+    int32 label
+    float32 score
+    float32 x1
+    float32 y1
+    float32 x2
+    float32 y2
+    rcnn_ros/point[] contours
+    
+    ================================================================================
+    MSG: rcnn_ros/point
+    int32 x
+    int32 y
+    
     `;
   }
 
@@ -133,46 +163,56 @@ class detection {
       msg = {};
     }
     const resolved = new detection(null);
-    if (msg.class_id !== undefined) {
-      resolved.class_id = msg.class_id;
+    if (msg.label !== undefined) {
+      resolved.label = msg.label;
     }
     else {
-      resolved.class_id = 0.0
+      resolved.label = 0
     }
 
-    if (msg.conf !== undefined) {
-      resolved.conf = msg.conf;
+    if (msg.score !== undefined) {
+      resolved.score = msg.score;
     }
     else {
-      resolved.conf = 0.0
+      resolved.score = 0.0
     }
 
-    if (msg.x_axis !== undefined) {
-      resolved.x_axis = msg.x_axis;
+    if (msg.x1 !== undefined) {
+      resolved.x1 = msg.x1;
     }
     else {
-      resolved.x_axis = 0.0
+      resolved.x1 = 0.0
     }
 
-    if (msg.y_axis !== undefined) {
-      resolved.y_axis = msg.y_axis;
+    if (msg.y1 !== undefined) {
+      resolved.y1 = msg.y1;
     }
     else {
-      resolved.y_axis = 0.0
+      resolved.y1 = 0.0
     }
 
-    if (msg.weight !== undefined) {
-      resolved.weight = msg.weight;
+    if (msg.x2 !== undefined) {
+      resolved.x2 = msg.x2;
     }
     else {
-      resolved.weight = 0.0
+      resolved.x2 = 0.0
     }
 
-    if (msg.height !== undefined) {
-      resolved.height = msg.height;
+    if (msg.y2 !== undefined) {
+      resolved.y2 = msg.y2;
     }
     else {
-      resolved.height = 0.0
+      resolved.y2 = 0.0
+    }
+
+    if (msg.contours !== undefined) {
+      resolved.contours = new Array(msg.contours.length);
+      for (let i = 0; i < resolved.contours.length; ++i) {
+        resolved.contours[i] = point.Resolve(msg.contours[i]);
+      }
+    }
+    else {
+      resolved.contours = []
     }
 
     return resolved;

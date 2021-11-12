@@ -12,6 +12,7 @@
 #include "../include/rcnn_ros/calibrator.hpp"
 #include "rcnn_ros/detection.h"
 #include "rcnn_ros/results.h"
+#include "rcnn_ros/point.h"
 #include <cv_bridge/cv_bridge.h>
 #include <ros/ros.h>
 #include"mv_driver/raw_img.h"
@@ -100,7 +101,7 @@ std::vector<float>& input, std::vector<float*>& output) {
 
 
 
-
+ros::Publisher pub;
 void imageCallback(const mv_driver::raw_imgPtr& msg);
 IExecutionContext* context;
 ICudaEngine* engine;
@@ -185,7 +186,7 @@ int main(int argc, char** argv) {
     ros::NodeHandle n;
 
     ros::Subscriber imageSub = n.subscribe("/raw_img", 5, &imageCallback);
-
+    pub = n.advertise<rcnn_ros::results>("/rcnn_results", 20);
     ros::Rate loop_rate(30);
     while (ros::ok())
     {
@@ -228,15 +229,22 @@ void imageCallback(const mv_driver::raw_imgPtr& msg)
 
 		float h_ratio = static_cast<float>(INPUT_H) / IMAGE_HEIGHT;
 		float w_ratio = static_cast<float>(INPUT_W) / IMAGE_WIDTH;
-
+        std::vector<rcnn_ros::detection> res;
 		for (int i = 0; i < DETECTIONS_PER_IMAGE; i++) {
 		        if (scores_h[i] > SCORE_THRESH) {
+			    rcnn_ros::detection tmp;
 		            float x1 = boxes_h[i * 4 + 0] * w_ratio;
 		            float y1 = boxes_h[i * 4 + 1] * h_ratio;
 		            float x2 = boxes_h[i * 4 + 2] * w_ratio;
 		            float y2 = boxes_h[i * 4 + 3] * h_ratio;
 		            int label = classes_h[i];
 		            float score = scores_h[i];
+		            tmp.x1 = x1;
+		            tmp.y1 = y1;
+		            tmp.x2 = x2;
+		            tmp.y2 = y2;
+		            tmp.label = label;
+		            tmp.score = score;
 		            printf("boxes:[%.6f, %.6f, %.6f, %.6f] scores: %.4f label: %d \n", x1, y1, x2, y2, score, label);
 		            cv::Rect r(x1, y1, x2 - x1, y2 - y1);
 		            cv::rectangle(img, r, cv::Scalar(0x27, 0xC1, 0x36), 2);
@@ -260,15 +268,30 @@ void imageCallback(const mv_driver::raw_imgPtr& msg)
 		                curMask(r) += maskPart;
 		                std::vector<std::vector<cv::Point>> contours;
 		                cv::findContours(curMask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_NONE);
+				std::vector<rcnn_ros::point> re_con(contours[0].size());
+				//本来是把所有图片都处理完再开始画contours的，所以contours设置为一个ecotr，但是这里写在image_callback函数里，每处理一张图片就画一次和发布一次结果，所以其实contour只有一个元素
 		                for (int c = 0; c < contours.size(); c++)
-		                    cv::drawContours(img, contours, c, cv::Scalar(0, 0, 255));
+				{
+					for(int k=0;k<contours[c].size();k++)
+					{
+						re_con[k].x=contours[c][k].x;
+						re_con[k].y=contours[c][k].y;
+					}
+
+					cv::drawContours(img, contours, c, cv::Scalar(0, 0, 255));
+				}
+		                tmp.contours=re_con;
 				if(contours.size()!=0)
 					cv::imwrite("/home/qudoudou/RC2021/src/rcnn_ros/test/result_"+std::to_string(num)+".jpg",img);
 		            }
 		             //mask on
+				res.push_back(tmp);
 		        }
 		    }
-
+            rcnn_ros::results Result;
+			Result.stamp=msg->color.header.stamp;
+			Result.results=res;
+			pub.publish(Result);
 		}
 
 

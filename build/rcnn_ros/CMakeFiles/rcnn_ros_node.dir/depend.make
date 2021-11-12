@@ -3,6 +3,7 @@
 
 rcnn_ros/CMakeFiles/rcnn_ros_node.dir/src/rcnn.cpp.o: /home/qudoudou/RC2021/devel/include/mv_driver/raw_img.h
 rcnn_ros/CMakeFiles/rcnn_ros_node.dir/src/rcnn.cpp.o: /home/qudoudou/RC2021/devel/include/rcnn_ros/detection.h
+rcnn_ros/CMakeFiles/rcnn_ros_node.dir/src/rcnn.cpp.o: /home/qudoudou/RC2021/devel/include/rcnn_ros/point.h
 rcnn_ros/CMakeFiles/rcnn_ros_node.dir/src/rcnn.cpp.o: /home/qudoudou/RC2021/devel/include/rcnn_ros/results.h
 rcnn_ros/CMakeFiles/rcnn_ros_node.dir/src/rcnn.cpp.o: /home/qudoudou/RC2021/src/rcnn_ros/include/rcnn_ros/./cuda_utils.h
 rcnn_ros/CMakeFiles/rcnn_ros_node.dir/src/rcnn.cpp.o: /home/qudoudou/RC2021/src/rcnn_ros/include/rcnn_ros/./logging.h

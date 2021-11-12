@@ -6,19 +6,27 @@ python3 = True if sys.hexversion > 0x03000000 else False
 import genpy
 import struct
 
+import rcnn_ros.msg
 
 class detection(genpy.Message):
-  _md5sum = "18249658e877a86d85ab6523f10897f4"
+  _md5sum = "54dfb3fadd948f9a528ccd7979566a61"
   _type = "rcnn_ros/detection"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """float32 class_id
-float32 conf
-float32 x_axis
-float32 y_axis
-float32 weight
-float32 height"""
-  __slots__ = ['class_id','conf','x_axis','y_axis','weight','height']
-  _slot_types = ['float32','float32','float32','float32','float32','float32']
+  _full_text = """int32 label
+float32 score
+float32 x1
+float32 y1
+float32 x2
+float32 y2
+rcnn_ros/point[] contours
+
+================================================================================
+MSG: rcnn_ros/point
+int32 x
+int32 y
+"""
+  __slots__ = ['label','score','x1','y1','x2','y2','contours']
+  _slot_types = ['int32','float32','float32','float32','float32','float32','rcnn_ros/point[]']
 
   def __init__(self, *args, **kwds):
     """
@@ -28,7 +36,7 @@ float32 height"""
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       class_id,conf,x_axis,y_axis,weight,height
+       label,score,x1,y1,x2,y2,contours
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -37,25 +45,28 @@ float32 height"""
     if args or kwds:
       super(detection, self).__init__(*args, **kwds)
       # message fields cannot be None, assign default values for those that are
-      if self.class_id is None:
-        self.class_id = 0.
-      if self.conf is None:
-        self.conf = 0.
-      if self.x_axis is None:
-        self.x_axis = 0.
-      if self.y_axis is None:
-        self.y_axis = 0.
-      if self.weight is None:
-        self.weight = 0.
-      if self.height is None:
-        self.height = 0.
+      if self.label is None:
+        self.label = 0
+      if self.score is None:
+        self.score = 0.
+      if self.x1 is None:
+        self.x1 = 0.
+      if self.y1 is None:
+        self.y1 = 0.
+      if self.x2 is None:
+        self.x2 = 0.
+      if self.y2 is None:
+        self.y2 = 0.
+      if self.contours is None:
+        self.contours = []
     else:
-      self.class_id = 0.
-      self.conf = 0.
-      self.x_axis = 0.
-      self.y_axis = 0.
-      self.weight = 0.
-      self.height = 0.
+      self.label = 0
+      self.score = 0.
+      self.x1 = 0.
+      self.y1 = 0.
+      self.x2 = 0.
+      self.y2 = 0.
+      self.contours = []
 
   def _get_types(self):
     """
@@ -70,7 +81,12 @@ float32 height"""
     """
     try:
       _x = self
-      buff.write(_get_struct_6f().pack(_x.class_id, _x.conf, _x.x_axis, _x.y_axis, _x.weight, _x.height))
+      buff.write(_get_struct_i5f().pack(_x.label, _x.score, _x.x1, _x.y1, _x.x2, _x.y2))
+      length = len(self.contours)
+      buff.write(_struct_I.pack(length))
+      for val1 in self.contours:
+        _x = val1
+        buff.write(_get_struct_2i().pack(_x.x, _x.y))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -82,11 +98,24 @@ float32 height"""
     if python3:
       codecs.lookup_error("rosmsg").msg_type = self._type
     try:
+      if self.contours is None:
+        self.contours = None
       end = 0
       _x = self
       start = end
       end += 24
-      (_x.class_id, _x.conf, _x.x_axis, _x.y_axis, _x.weight, _x.height,) = _get_struct_6f().unpack(str[start:end])
+      (_x.label, _x.score, _x.x1, _x.y1, _x.x2, _x.y2,) = _get_struct_i5f().unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      self.contours = []
+      for i in range(0, length):
+        val1 = rcnn_ros.msg.point()
+        _x = val1
+        start = end
+        end += 8
+        (_x.x, _x.y,) = _get_struct_2i().unpack(str[start:end])
+        self.contours.append(val1)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -100,7 +129,12 @@ float32 height"""
     """
     try:
       _x = self
-      buff.write(_get_struct_6f().pack(_x.class_id, _x.conf, _x.x_axis, _x.y_axis, _x.weight, _x.height))
+      buff.write(_get_struct_i5f().pack(_x.label, _x.score, _x.x1, _x.y1, _x.x2, _x.y2))
+      length = len(self.contours)
+      buff.write(_struct_I.pack(length))
+      for val1 in self.contours:
+        _x = val1
+        buff.write(_get_struct_2i().pack(_x.x, _x.y))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -113,11 +147,24 @@ float32 height"""
     if python3:
       codecs.lookup_error("rosmsg").msg_type = self._type
     try:
+      if self.contours is None:
+        self.contours = None
       end = 0
       _x = self
       start = end
       end += 24
-      (_x.class_id, _x.conf, _x.x_axis, _x.y_axis, _x.weight, _x.height,) = _get_struct_6f().unpack(str[start:end])
+      (_x.label, _x.score, _x.x1, _x.y1, _x.x2, _x.y2,) = _get_struct_i5f().unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      self.contours = []
+      for i in range(0, length):
+        val1 = rcnn_ros.msg.point()
+        _x = val1
+        start = end
+        end += 8
+        (_x.x, _x.y,) = _get_struct_2i().unpack(str[start:end])
+        self.contours.append(val1)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -126,9 +173,15 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_6f = None
-def _get_struct_6f():
-    global _struct_6f
-    if _struct_6f is None:
-        _struct_6f = struct.Struct("<6f")
-    return _struct_6f
+_struct_2i = None
+def _get_struct_2i():
+    global _struct_2i
+    if _struct_2i is None:
+        _struct_2i = struct.Struct("<2i")
+    return _struct_2i
+_struct_i5f = None
+def _get_struct_i5f():
+    global _struct_i5f
+    if _struct_i5f is None:
+        _struct_i5f = struct.Struct("<i5f")
+    return _struct_i5f

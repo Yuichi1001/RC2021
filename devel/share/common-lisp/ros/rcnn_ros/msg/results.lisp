@@ -88,16 +88,16 @@
   "rcnn_ros/results")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<results>)))
   "Returns md5sum for a message object of type '<results>"
-  "03a8813cbb2e4cc1ddfa64bafe3af10c")
+  "128a74f45c3c1bb074f854b411cdfc9d")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'results)))
   "Returns md5sum for a message object of type 'results"
-  "03a8813cbb2e4cc1ddfa64bafe3af10c")
+  "128a74f45c3c1bb074f854b411cdfc9d")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<results>)))
   "Returns full string definition for message of type '<results>"
-  (cl:format cl:nil "time stamp~%rcnn_ros/detection[] results~%~%================================================================================~%MSG: rcnn_ros/detection~%float32 class_id~%float32 conf~%float32 x_axis~%float32 y_axis~%float32 weight~%float32 height~%~%"))
+  (cl:format cl:nil "time stamp~%rcnn_ros/detection[] results~%~%================================================================================~%MSG: rcnn_ros/detection~%int32 label~%float32 score~%float32 x1~%float32 y1~%float32 x2~%float32 y2~%rcnn_ros/point[] contours~%~%================================================================================~%MSG: rcnn_ros/point~%int32 x~%int32 y~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'results)))
   "Returns full string definition for message of type 'results"
-  (cl:format cl:nil "time stamp~%rcnn_ros/detection[] results~%~%================================================================================~%MSG: rcnn_ros/detection~%float32 class_id~%float32 conf~%float32 x_axis~%float32 y_axis~%float32 weight~%float32 height~%~%"))
+  (cl:format cl:nil "time stamp~%rcnn_ros/detection[] results~%~%================================================================================~%MSG: rcnn_ros/detection~%int32 label~%float32 score~%float32 x1~%float32 y1~%float32 x2~%float32 y2~%rcnn_ros/point[] contours~%~%================================================================================~%MSG: rcnn_ros/point~%int32 x~%int32 y~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <results>))
   (cl:+ 0
      8

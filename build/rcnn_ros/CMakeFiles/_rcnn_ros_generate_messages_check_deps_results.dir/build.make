@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/qudoudou/RC2021/build
 include rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_results.dir/progress.make
 
 rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_results:
-	cd /home/qudoudou/RC2021/build/rcnn_ros && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py rcnn_ros /home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg rcnn_ros/detection
+	cd /home/qudoudou/RC2021/build/rcnn_ros && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py rcnn_ros /home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg rcnn_ros/detection:rcnn_ros/point
 
 _rcnn_ros_generate_messages_check_deps_results: rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_results
 _rcnn_ros_generate_messages_check_deps_results: rcnn_ros/CMakeFiles/_rcnn_ros_generate_messages_check_deps_results.dir/build.make

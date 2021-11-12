@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "rcnn_ros: 2 messages, 0 services")
+message(STATUS "rcnn_ros: 3 messages, 0 services")
 
 set(MSG_I_FLAGS "-Ircnn_ros:/home/qudoudou/RC2021/src/rcnn_ros/msg")
 
@@ -17,14 +17,19 @@ add_custom_target(rcnn_ros_generate_messages ALL)
 
 
 
+get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg" NAME_WE)
+add_custom_target(_rcnn_ros_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "rcnn_ros" "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg" ""
+)
+
 get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg" NAME_WE)
 add_custom_target(_rcnn_ros_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "rcnn_ros" "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg" "rcnn_ros/detection"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "rcnn_ros" "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg" "rcnn_ros/detection:rcnn_ros/point"
 )
 
 get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg" NAME_WE)
 add_custom_target(_rcnn_ros_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "rcnn_ros" "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg" ""
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "rcnn_ros" "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg" "rcnn_ros/point"
 )
 
 #
@@ -34,15 +39,21 @@ add_custom_target(_rcnn_ros_generate_messages_check_deps_${_filename}
 ### Section generating for lang: gencpp
 ### Generating Messages
 _generate_msg_cpp(rcnn_ros
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/rcnn_ros
+)
+_generate_msg_cpp(rcnn_ros
   "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg"
   "${MSG_I_FLAGS}"
-  "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg"
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg;/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/rcnn_ros
 )
 _generate_msg_cpp(rcnn_ros
   "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/rcnn_ros
 )
 
@@ -60,6 +71,8 @@ add_custom_target(rcnn_ros_generate_messages_cpp
 add_dependencies(rcnn_ros_generate_messages rcnn_ros_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg" NAME_WE)
+add_dependencies(rcnn_ros_generate_messages_cpp _rcnn_ros_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg" NAME_WE)
 add_dependencies(rcnn_ros_generate_messages_cpp _rcnn_ros_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg" NAME_WE)
@@ -75,15 +88,21 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS rcnn_ros_generate_messages_cpp)
 ### Section generating for lang: geneus
 ### Generating Messages
 _generate_msg_eus(rcnn_ros
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/rcnn_ros
+)
+_generate_msg_eus(rcnn_ros
   "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg"
   "${MSG_I_FLAGS}"
-  "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg"
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg;/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/rcnn_ros
 )
 _generate_msg_eus(rcnn_ros
   "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/rcnn_ros
 )
 
@@ -101,6 +120,8 @@ add_custom_target(rcnn_ros_generate_messages_eus
 add_dependencies(rcnn_ros_generate_messages rcnn_ros_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg" NAME_WE)
+add_dependencies(rcnn_ros_generate_messages_eus _rcnn_ros_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg" NAME_WE)
 add_dependencies(rcnn_ros_generate_messages_eus _rcnn_ros_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg" NAME_WE)
@@ -116,15 +137,21 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS rcnn_ros_generate_messages_eus)
 ### Section generating for lang: genlisp
 ### Generating Messages
 _generate_msg_lisp(rcnn_ros
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/rcnn_ros
+)
+_generate_msg_lisp(rcnn_ros
   "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg"
   "${MSG_I_FLAGS}"
-  "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg"
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg;/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/rcnn_ros
 )
 _generate_msg_lisp(rcnn_ros
   "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/rcnn_ros
 )
 
@@ -142,6 +169,8 @@ add_custom_target(rcnn_ros_generate_messages_lisp
 add_dependencies(rcnn_ros_generate_messages rcnn_ros_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg" NAME_WE)
+add_dependencies(rcnn_ros_generate_messages_lisp _rcnn_ros_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg" NAME_WE)
 add_dependencies(rcnn_ros_generate_messages_lisp _rcnn_ros_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg" NAME_WE)
@@ -157,15 +186,21 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS rcnn_ros_generate_messages_lisp)
 ### Section generating for lang: gennodejs
 ### Generating Messages
 _generate_msg_nodejs(rcnn_ros
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/rcnn_ros
+)
+_generate_msg_nodejs(rcnn_ros
   "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg"
   "${MSG_I_FLAGS}"
-  "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg"
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg;/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/rcnn_ros
 )
 _generate_msg_nodejs(rcnn_ros
   "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/rcnn_ros
 )
 
@@ -183,6 +218,8 @@ add_custom_target(rcnn_ros_generate_messages_nodejs
 add_dependencies(rcnn_ros_generate_messages rcnn_ros_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg" NAME_WE)
+add_dependencies(rcnn_ros_generate_messages_nodejs _rcnn_ros_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg" NAME_WE)
 add_dependencies(rcnn_ros_generate_messages_nodejs _rcnn_ros_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg" NAME_WE)
@@ -198,15 +235,21 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS rcnn_ros_generate_messages_nodejs)
 ### Section generating for lang: genpy
 ### Generating Messages
 _generate_msg_py(rcnn_ros
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/rcnn_ros
+)
+_generate_msg_py(rcnn_ros
   "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg"
   "${MSG_I_FLAGS}"
-  "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg"
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg;/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/rcnn_ros
 )
 _generate_msg_py(rcnn_ros
   "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/rcnn_ros
 )
 
@@ -224,6 +267,8 @@ add_custom_target(rcnn_ros_generate_messages_py
 add_dependencies(rcnn_ros_generate_messages rcnn_ros_generate_messages_py)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/point.msg" NAME_WE)
+add_dependencies(rcnn_ros_generate_messages_py _rcnn_ros_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/results.msg" NAME_WE)
 add_dependencies(rcnn_ros_generate_messages_py _rcnn_ros_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/qudoudou/RC2021/src/rcnn_ros/msg/detection.msg" NAME_WE)

@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/rcnn_ros_generate_messages_cpp"
+  "/home/qudoudou/RC2021/devel/include/rcnn_ros/point.h"
   "/home/qudoudou/RC2021/devel/include/rcnn_ros/results.h"
   "/home/qudoudou/RC2021/devel/include/rcnn_ros/detection.h"
 )

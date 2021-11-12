@@ -39,6 +39,7 @@ add_message_files(
   FILES
   detection.msg
   results.msg
+  point.msg
 )
 
 generate_messages(
